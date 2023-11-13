@@ -1,6 +1,7 @@
 use std::thread;
 use std::time::Duration;
-use std::sync::{mpsc, Mutex}; // mpsc = multiple producer single consumer
+use std::sync::{mpsc, Mutex, Arc}; // mpsc = multiple producer single consumer
+
 
 fn main() {
     /*
@@ -67,13 +68,26 @@ fn main() {
 //    }
    
    /*
-        Shared state concurrency - using mutexs / mutual exclusion primitive
+        Shared state concurrency - using mutexs / mutual exclusion primitive, 
+        Atomic Reference Countingw/Arc<T> - see the standard library documentation for std::sync::atomic for more details
     */
-    let m = Mutex::new(5);
-    {
-        let mut num = m.lock().unwrap();
-        *num = 6;
+    let counter = Arc::new(Mutex::new(0));
+    let mut handles = vec![];
+
+    for _ in 0..6 {
+        let counter = Arc::clone(&counter);
+        let handle = thread::spawn( move || {
+            let mut num = counter.lock().unwrap();
+            *num += 1;
+        });
+        handles.push(handle);
     }
-    println!("m = {:?}", m);
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+   
+    println!("Result: {}", *counter.lock().unwrap());
+
 }
  
