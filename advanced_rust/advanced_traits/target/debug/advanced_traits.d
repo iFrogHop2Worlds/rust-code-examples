@@ -1,1 +1,0 @@
-C:\source\RustBook\rust_examples\advanced_rust\advanced_traits\target\debug\advanced_traits.exe: C:\source\RustBook\rust_examples\advanced_rust\advanced_traits\src\lib.rs C:\source\RustBook\rust_examples\advanced_rust\advanced_traits\src\main.rs
