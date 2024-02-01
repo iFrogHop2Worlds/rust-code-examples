@@ -3,7 +3,7 @@ use serde_json::value::Value;
 
 pub trait Get {
     fn get(&self, title: &str, state: Map<String, Value>) {
-        let item: Options<&Value> = state.get(title);
+        let item: Option<&Value> = state.get(title);
         match item {
             Some(result) => {
                 println!("\n\nItem: {}", title);

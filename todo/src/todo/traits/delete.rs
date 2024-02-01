@@ -3,9 +3,9 @@ use serde_json::value::Value;
 use crate::state::write_to_file;
 
 pub trait Delete {
-    fn delete(&self, title: &str, state: Map<String, Value>) {
+    fn delete(&self, title: &str, mut state: Map<String, Value>) {
         state.remove(title);
-        write_to_file("./state.json", state);
+        write_to_file("./state.json", &mut state);
         println!("Deleted: {}", title);
     }
 }
