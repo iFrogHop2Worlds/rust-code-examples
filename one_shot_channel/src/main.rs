@@ -1,17 +1,13 @@
 use std::thread;
 use one_shot_channel::Channel;
-
 fn main() {
-    let channel = Channel::new();
-    let t = thread::current();
-    thread::scope(|s| unsafe {
-        s.spawn(|| {
-            channel.send("hollow world");
-            t.unpark();
-        });
-        while !channel.is_ready() {
-            thread::park();
-        }
-        assert_eq!(channel.receive(), "hollow world")
-     })
+  let mut channel = Channel::new();
+  thread::scope(|s| {
+      let (sender, receiver) = channel.split(); // returns 2 shared references to an exclusive borrow
+      let t = thread::current();
+      s.spawn(move || {
+          sender.send("hello worlds");
+      });
+      assert_eq!(receiver.receive(), "hello worlds");
+  });
 }
