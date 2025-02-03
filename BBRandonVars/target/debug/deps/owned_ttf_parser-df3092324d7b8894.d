@@ -1,0 +1,10 @@
+C:\source\rust-code-examples\BBRandonVars\target\debug\deps\libowned_ttf_parser-df3092324d7b8894.rmeta: C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.25.0\src/lib.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.25.0\src\convert.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.25.0\src\owned.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.25.0\src\preparse.rs
+
+C:\source\rust-code-examples\BBRandonVars\target\debug\deps\libowned_ttf_parser-df3092324d7b8894.rlib: C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.25.0\src/lib.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.25.0\src\convert.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.25.0\src\owned.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.25.0\src\preparse.rs
+
+C:\source\rust-code-examples\BBRandonVars\target\debug\deps\owned_ttf_parser-df3092324d7b8894.d: C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.25.0\src/lib.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.25.0\src\convert.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.25.0\src\owned.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.25.0\src\preparse.rs
+
+C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.25.0\src/lib.rs:
+C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.25.0\src\convert.rs:
+C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.25.0\src\owned.rs:
+C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\owned_ttf_parser-0.25.0\src\preparse.rs:

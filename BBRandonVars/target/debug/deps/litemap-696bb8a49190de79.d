@@ -1,0 +1,11 @@
+C:\source\rust-code-examples\BBRandonVars\target\debug\deps\liblitemap-696bb8a49190de79.rmeta: C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src/lib.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src\map.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src\store\mod.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src\store\slice_impl.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src\store\vec_impl.rs
+
+C:\source\rust-code-examples\BBRandonVars\target\debug\deps\liblitemap-696bb8a49190de79.rlib: C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src/lib.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src\map.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src\store\mod.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src\store\slice_impl.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src\store\vec_impl.rs
+
+C:\source\rust-code-examples\BBRandonVars\target\debug\deps\litemap-696bb8a49190de79.d: C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src/lib.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src\map.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src\store\mod.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src\store\slice_impl.rs C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src\store\vec_impl.rs
+
+C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src/lib.rs:
+C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src\map.rs:
+C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src\store\mod.rs:
+C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src\store\slice_impl.rs:
+C:\Users\bbest\.cargo\registry\src\index.crates.io-6f17d22bba15001f\litemap-0.7.4\src\store\vec_impl.rs:
