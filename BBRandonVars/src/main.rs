@@ -15,7 +15,7 @@ pub fn create_grid(n: usize, p: f64) -> Vec<Vec<char>> {
     for _ in 0..trials {
         let mut successes = 0;
         for _ in 0..n {
-            if rng.gen_bool(p) {
+            if rng.random_bool(p) {
                 successes += 1;
             }
         }
