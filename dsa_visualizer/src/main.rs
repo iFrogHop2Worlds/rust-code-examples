@@ -187,7 +187,6 @@ impl eframe::App for DSAVisualizer {
             });
         });
 
-        // Automatic traversal
         if self.auto_traverse {
             if self.last_step_time.map_or(true, |t| now.duration_since(t) >= Duration::from_secs(2)) {
                 self.bfs_step();
