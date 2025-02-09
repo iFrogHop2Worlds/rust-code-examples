@@ -54,7 +54,6 @@ impl BFSVisualizer {
         self.auto_traverse = false;
     }
 
-    // Start BFS traversal
     fn start_bfs(&mut self) {
         if self.tree_created {
             self.visited.clear();
@@ -81,62 +80,66 @@ impl BFSVisualizer {
         }
     }
 
-    fn render_tree(&self, ui: &mut egui::Ui) {
-        let total_levels = self.nodes.iter().map(|(_, _, level)| level).max().unwrap_or(&0) + 1;
-        let node_spacing = 70.0;
-        let width = (2usize.pow(total_levels as u32 - 1) as f32 * node_spacing).max(800.0);
-        let height = (total_levels as f32 * 120.0).max(600.0);
-        let level_spacing = height / (total_levels as f32 + 1.0);
-        let node_radius = 30.0;
+        fn render_tree(&self, ui: &mut egui::Ui) {
+            let total_levels = self.nodes.iter().map(|(_, _, level)| level).max().unwrap_or(&0) + 1;
+            let node_spacing = 70.0;
+            let screen_width = ui.available_width();
+            let width = (2usize.pow(total_levels as u32 - 1) as f32 * node_spacing).max(800.0);
+            let height = (total_levels as f32 * 120.0).max(600.0);
+            let level_spacing = height / (total_levels as f32 + 1.0);
+            let node_radius = 30.0;
 
-        let mut levels: Vec<Vec<(usize, usize)>> = vec![Vec::new(); total_levels];
-        for &(node_id, parent_id, level) in &self.nodes {
-            levels[level].push((node_id, parent_id));
-        }
-
-        let mut positions = Vec::new();
-        for (level, nodes) in levels.iter().enumerate() {
-            let level_count = nodes.len();
-            let x_spacing = width / (level_count as f32 + 1.0);
-
-            for (i, &(node_id, _)) in nodes.iter().enumerate() {
-                let x = x_spacing * (i as f32 + 1.0);
-                let y = level_spacing * (level as f32 + 1.0);
-                positions.push((node_id, x, y));
+            let mut levels: Vec<Vec<(usize, usize)>> = vec![Vec::new(); total_levels];
+            for &(node_id, parent_id, level) in &self.nodes {
+                levels[level].push((node_id, parent_id));
             }
-        }
 
-        for &(node_id, parent_id, _) in &self.nodes {
-            if let Some(&(_, x, y)) = positions.iter().find(|&&(id, _, _)| id == node_id) {
-                let color = if self.current_node == Some(node_id) {
-                    egui::Color32::GREEN
-                } else if self.visited.contains(&node_id) {
-                    egui::Color32::LIGHT_BLUE
-                } else {
-                    egui::Color32::RED
-                };
+            let mut positions = Vec::new();
+            let tree_width = (levels.last().unwrap_or(&Vec::new()).len() as f32 - 1.0) * node_spacing;
+            let center_offset = (screen_width - tree_width) / 2.0;
 
-                ui.painter().circle_filled(egui::pos2(x, y), node_radius, color);
+            for (level, nodes) in levels.iter().enumerate() {
+                let level_count = nodes.len();
+                let x_spacing = width / (level_count as f32 + 1.0);
 
-                if parent_id != 0 {
-                    if let Some(&(_, px, py)) = positions.iter().find(|&&(id, _, _)| id == parent_id) {
-                        ui.painter().line_segment(
-                            [egui::pos2(px, py), egui::pos2(x, y)],
-                            egui::Stroke::new(2.0, egui::Color32::GRAY),
-                        );
-                    }
+                for (i, &(node_id, _)) in nodes.iter().enumerate() {
+                    let x = center_offset + x_spacing * (i as f32 + 1.0);
+                    let y = level_spacing * (level as f32 + 1.0);
+                    positions.push((node_id, x, y));
                 }
+            }
 
-                ui.painter().text(
-                    egui::pos2(x, y - 10.0),
-                    egui::Align2::CENTER_BOTTOM,
-                    format!("{}", node_id),
-                    egui::TextStyle::Body.resolve(ui.style()),
-                    egui::Color32::BLACK,
-                );
+            for &(node_id, parent_id, _) in &self.nodes {
+                if let Some(&(_, x, y)) = positions.iter().find(|&&(id, _, _)| id == node_id) {
+                    let color = if self.current_node == Some(node_id) {
+                        egui::Color32::GREEN
+                    } else if self.visited.contains(&node_id) {
+                        egui::Color32::LIGHT_BLUE
+                    } else {
+                        egui::Color32::RED
+                    };
+
+                    ui.painter().circle_filled(egui::pos2(x, y), node_radius, color);
+
+                    if parent_id != 0 {
+                        if let Some(&(_, px, py)) = positions.iter().find(|&&(id, _, _)| id == parent_id) {
+                            ui.painter().line_segment(
+                                [egui::pos2(px, py + (node_radius)), egui::pos2(x, y - (node_radius))],
+                                egui::Stroke::new(2.0, egui::Color32::GRAY),
+                            );
+                        }
+                    }
+
+                    ui.painter().text(
+                        egui::pos2(x, y - 10.0),
+                        egui::Align2::CENTER_BOTTOM,
+                        format!("{}", node_id),
+                        egui::TextStyle::Body.resolve(ui.style()),
+                        egui::Color32::BLACK,
+                    );
+                }
             }
         }
-    }
 }
 
 impl Algorithm for BFSVisualizer {

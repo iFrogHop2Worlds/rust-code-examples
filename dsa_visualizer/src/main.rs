@@ -1,10 +1,12 @@
 mod algorithm;
 mod bfs;
+mod dfs;
 
 use std::time::Duration;
 use algorithm::Algorithm;
 use bfs::BFSVisualizer;
 use eframe::egui;
+use crate::dfs::DFSVisualizer;
 
 fn main() {
     let options = eframe::NativeOptions::default();
@@ -35,9 +37,16 @@ impl eframe::App for DSAVisualizer {
         egui::CentralPanel::default().show(ctx, |ui| {
             if self.current_scene.is_empty() {
                 ui.heading("Algorithms");
+                // Menu buttons
                 if ui.button("Breadth First Search (BFS)").clicked() {
                     self.current_scene = "BFS".to_string();
                     self.current_algorithm = Some(Box::new(BFSVisualizer::new()));
+                    self.current_algorithm.as_mut().unwrap().initialize();
+                }
+
+                if ui.button("Depth First Search (DFS)").clicked() {
+                    self.current_scene = "DFS".to_string();
+                    self.current_algorithm = Some(Box::new(DFSVisualizer::new()));
                     self.current_algorithm.as_mut().unwrap().initialize();
                 }
             } else {
@@ -49,12 +58,11 @@ impl eframe::App for DSAVisualizer {
                         self.current_algorithm = None;
                         return;
                     }
+
                     ui.separator();
+                    ui.add_space(12.0);
 
                     algorithm.render(ui);
-
-                    ui.separator();
-
 
                     if ui.button("Start").clicked() {
                         algorithm.toggle_auto_traverse();
@@ -68,7 +76,6 @@ impl eframe::App for DSAVisualizer {
                     if ui.button("Resume").clicked() {
                         algorithm.toggle_auto_traverse();
                     }
-
 
                     if ui.button("Next Step").clicked() {
                         algorithm.step();
@@ -88,7 +95,7 @@ impl eframe::App for DSAVisualizer {
                 }
             }
         }
-        
+
         ctx.request_repaint();
     }
 }
