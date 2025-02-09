@@ -1,6 +1,19 @@
 mod algorithm;
 mod bfs;
 mod dfs;
+mod merge_sort;
+mod heap_sort;
+mod quicc_sort;
+mod dijkstra;
+mod kruskal;
+mod bellman_ford;
+mod floyds_cycle_detection;
+mod longest_common_sequence;
+mod knapsack;
+mod kmp;
+mod rabin_carp;
+mod gradient_descent;
+mod euclidean;
 
 use std::time::Duration;
 use algorithm::Algorithm;
