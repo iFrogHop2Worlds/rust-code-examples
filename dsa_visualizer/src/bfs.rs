@@ -21,7 +21,7 @@ impl BFSVisualizer {
             visited: Vec::new(),
             bfs_queue: VecDeque::new(),
             tree_created: false,
-            auto_traverse: true,
+            auto_traverse: false,
             last_step_time: None,
         }
     }
@@ -54,6 +54,18 @@ impl BFSVisualizer {
         self.auto_traverse = false;
     }
 
+    // Start BFS traversal
+    fn start_bfs(&mut self) {
+        if self.tree_created {
+            self.visited.clear();
+            self.bfs_queue.clear();
+            self.current_node = None;
+            self.bfs_queue.push_back(1);
+            self.auto_traverse = true;
+            self.last_step_time = None;
+        }
+    }
+
     fn bfs_step(&mut self) {
         if let Some(current) = self.bfs_queue.pop_front() {
             self.current_node = Some(current);
@@ -70,7 +82,6 @@ impl BFSVisualizer {
     }
 
     fn render_tree(&self, ui: &mut egui::Ui) {
-        // Compute dimensions dynamically
         let total_levels = self.nodes.iter().map(|(_, _, level)| level).max().unwrap_or(&0) + 1;
         let node_spacing = 70.0;
         let width = (2usize.pow(total_levels as u32 - 1) as f32 * node_spacing).max(800.0);
@@ -78,13 +89,11 @@ impl BFSVisualizer {
         let level_spacing = height / (total_levels as f32 + 1.0);
         let node_radius = 30.0;
 
-        // Group nodes by their levels
         let mut levels: Vec<Vec<(usize, usize)>> = vec![Vec::new(); total_levels];
         for &(node_id, parent_id, level) in &self.nodes {
             levels[level].push((node_id, parent_id));
         }
 
-        // Compute node positions
         let mut positions = Vec::new();
         for (level, nodes) in levels.iter().enumerate() {
             let level_count = nodes.len();
@@ -97,7 +106,6 @@ impl BFSVisualizer {
             }
         }
 
-        // Draw nodes and edges
         for &(node_id, parent_id, _) in &self.nodes {
             if let Some(&(_, x, y)) = positions.iter().find(|&&(id, _, _)| id == node_id) {
                 let color = if self.current_node == Some(node_id) {
@@ -148,33 +156,18 @@ impl Algorithm for BFSVisualizer {
         self.auto_traverse
     }
 
-    fn is_auto_traverse_enabled(&self) -> bool {
-        self.auto_traverse
+    fn toggle_auto_traverse(&mut self) {
+        self.auto_traverse = !self.auto_traverse;
     }
 
-    fn enable_auto_traverse(&mut self) {
-        self.auto_traverse = true;
+    fn start(&mut self)  {
+        self.start_bfs();
     }
-
-    fn disable_auto_traverse(&mut self) {
-        self.auto_traverse = false;
-    }
-
     fn last_step_time(&self) -> Option<Instant> {
         self.last_step_time
     }
 
-    fn update_last_step_time(&mut self, time: Instant) {
-        self.last_step_time = Some(time);
-    }
-
-    fn update(&mut self) {
-        if self.auto_traverse {
-            let now = Instant::now();
-            if self.last_step_time.map_or(true, |t| now.duration_since(t) >= Duration::from_secs(2)) {
-                self.bfs_step();
-                self.last_step_time = Some(now);
-            }
-        }
+    fn set_last_step_time(&mut self, time: Option<Instant>) {
+        self.last_step_time = time;
     }
 }
