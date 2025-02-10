@@ -11,8 +11,6 @@ pub struct MergeSortVisualizer {
     current_ranges: Option<(usize, usize, usize)>, // Active ranges (start, mid, end)
     auto_play: bool,
     last_step_time: Option<Instant>,
-    recursive_right_indices: Vec<usize>,
-    recursive_left_indices: Vec<usize>
 }
 
 impl MergeSortVisualizer {
@@ -21,8 +19,7 @@ impl MergeSortVisualizer {
         let temp = data.clone();
         let mut steps = Vec::new();
         Self::generate_steps(&mut data.clone(), &mut steps, 0, data.len() - 1);
-        let recursive_left_indices = Vec::new();
-        let recursive_right_indices = Vec::new();
+
         Self {
             data,
             temp,
@@ -31,8 +28,6 @@ impl MergeSortVisualizer {
             current_ranges: None,
             auto_play: false,
             last_step_time: None,
-            recursive_right_indices,
-            recursive_left_indices,
         }
     }
 
@@ -79,14 +74,6 @@ impl MergeSortVisualizer {
             self.data[idx] = self.temp[idx];
         }
     }
-
-    fn is_in_left_recursive(&self, index: usize) -> bool {
-        self.recursive_left_indices.contains(&index)
-    }
-
-    fn is_in_right_recursive(&self, index: usize) -> bool {
-        self.recursive_right_indices.contains(&index)
-    }
 }
 
 impl Algorithm for MergeSortVisualizer {
@@ -94,52 +81,6 @@ impl Algorithm for MergeSortVisualizer {
         self.current_step = 0;
         self.auto_play = false;
         self.last_step_time = None;
-    }
-
-    fn render(&self, ui: &mut egui::Ui) {
-        ui.label("Merge Sort Algorithm Visualization");
-        if let Some((start, mid, end)) = self.current_ranges {
-            for (i, &val) in self.data.iter().enumerate() {
-
-                if i >= start && i < mid {
-                    ui.colored_label(Color32::from_rgb(0, 255, 0), format!("Index {}: {}", i, val));
-                }
-
-                else if i >= mid && i < end {
-                    ui.colored_label(Color32::from_rgb(128, 255, 128), format!("Index {}: {}", i, val));
-                }
-
-                else if self.is_in_left_recursive(i) {
-                    ui.colored_label(Color32::from_rgb(0, 0, 255), format!("Index {}: {}", i, val));
-                }
-
-                else if self.is_in_right_recursive(i) {
-                    ui.colored_label(Color32::from_rgb(255, 165, 0), format!("Index {}: {}", i, val));
-                }
-
-                else if Some(i) == Option::from(self.current_step) {
-                    ui.colored_label(Color32::from_rgb(0, 0, 128), format!("Index {}: {}", i, val));
-                } else {
-                    ui.label(format!("Index {}: {}", i, val));
-                }
-            }
-        } else {
-            for (i, &val) in self.data.iter().enumerate() {
-                ui.label(format!("Index {}: {}", i, val));
-            }
-        }
-
-        ui.separator();
-        ui.label(format!(
-            "Step {}/{}",
-            self.current_step,
-            self.steps.len()
-        ));
-    }
-
-    fn start(&mut self) {
-        self.initialize();
-        self.auto_play = true;
     }
 
     fn step(&mut self) {
@@ -156,12 +97,49 @@ impl Algorithm for MergeSortVisualizer {
         }
     }
 
-    fn toggle_auto_traverse(&mut self) {
-        self.auto_play = !self.auto_play;
+    fn render(&self, ui: &mut egui::Ui) {
+        if let Some((start, mid, end)) = self.current_ranges {
+            for (i, &val) in self.data.iter().enumerate() {
+
+                if i >= start && i < mid {
+                    ui.colored_label(Color32::from_rgb(0, 255, 0), format!("Index  {}:  {}", i, val));
+                }
+
+                else if i >= mid && i < end {
+                    ui.colored_label(Color32::from_rgb(255, 0, 0), format!("Index  {}:  {}", i, val));
+                }
+
+                else if Some(i) == Option::from(self.current_step) {
+                    ui.colored_label(Color32::from_rgb(0, 128, 128), format!("Index  {}:  {}", i, val));
+                } else {
+                    ui.label(format!("Index  {}:  {}", i, val));
+                }
+            }
+        } else {
+            for (i, &val) in self.data.iter().enumerate() {
+                ui.label(format!("Index  {}:  {}", i, val));
+            }
+        }
+
+        ui.separator();
+        ui.label(format!(
+            "Step {}/{}",
+            self.current_step,
+            self.steps.len()
+        ));
     }
 
     fn auto_play(&self) -> bool {
         self.auto_play
+    }
+
+    fn toggle_auto_traverse(&mut self) {
+        self.auto_play = !self.auto_play;
+    }
+
+    fn start(&mut self) {
+        self.initialize();
+        self.auto_play = true;
     }
 
     fn last_step_time(&self) -> Option<Instant> {

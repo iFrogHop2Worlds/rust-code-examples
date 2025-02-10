@@ -22,7 +22,16 @@ use eframe::egui;
 use crate::dfs::DFSVisualizer;
 
 fn main() {
-    let options = eframe::NativeOptions::default();
+    let ctx = egui::Context::default();
+    let mut size = ctx.used_size();
+    size.x = 1200.00;
+    size.y = 720.00;
+    let options = eframe::NativeOptions {
+        viewport: egui::ViewportBuilder::default()
+            .with_resizable(true)
+            .with_inner_size(size),
+        ..Default::default()
+    };
     eframe::run_native(
         "DSA Visualizer",
         options,
@@ -49,25 +58,25 @@ impl eframe::App for DSAVisualizer {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default().show(ctx, |ui| {
             if self.current_scene.is_empty() {
-                ui.heading("Algorithms");
-                // Menu buttons
-                if ui.button("Breadth First Search (BFS)").clicked() {
-                    self.current_scene = "BFS".to_string();
-                    self.current_algorithm = Some(Box::new(BFSVisualizer::new()));
-                    self.current_algorithm.as_mut().unwrap().initialize();
-                }
-
-                if ui.button("Depth First Search (DFS)").clicked() {
-                    self.current_scene = "DFS".to_string();
-                    self.current_algorithm = Some(Box::new(DFSVisualizer::new()));
-                    self.current_algorithm.as_mut().unwrap().initialize();
-                }
-
-                if ui.button("Merge Sort").clicked() {
-                    self.current_scene = "Merge Sort".to_string();
-                    self.current_algorithm = Some(Box::new(merge_sort::MergeSortVisualizer::new()));
-                    self.current_algorithm.as_mut().unwrap().initialize();
-                }
+                ui.vertical_centered(|ui| {
+                    ui.heading("Algorithms");
+                    let button_size = egui::Vec2::new(320.0, 0.0);
+                    if ui.add_sized(button_size, egui::Button::new("Breadth First Search (BFS)")).clicked() {
+                        self.current_scene = "BFS".to_string();
+                        self.current_algorithm = Some(Box::new(BFSVisualizer::new()));
+                        self.current_algorithm.as_mut().unwrap().initialize();
+                    }
+                    if ui.add_sized(button_size, egui::Button::new("Depth First Search (DFS)")).clicked() {
+                        self.current_scene = "DFS".to_string();
+                        self.current_algorithm = Some(Box::new(DFSVisualizer::new()));
+                        self.current_algorithm.as_mut().unwrap().initialize();
+                    }
+                    if ui.add_sized(button_size, egui::Button::new("Merge Sort")).clicked() {
+                        self.current_scene = "Merge Sort".to_string();
+                        self.current_algorithm = Some(Box::new(merge_sort::MergeSortVisualizer::new()));
+                        self.current_algorithm.as_mut().unwrap().initialize();
+                    }
+                });
 
             } else {
                 if let Some(algorithm) = &mut self.current_algorithm {
