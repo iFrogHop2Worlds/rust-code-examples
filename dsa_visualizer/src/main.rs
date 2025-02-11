@@ -71,6 +71,11 @@ impl eframe::App for DSAVisualizer {
                         self.current_algorithm = Some(Box::new(DFSVisualizer::new()));
                         self.current_algorithm.as_mut().unwrap().initialize();
                     }
+                    if ui.add_sized(button_size, egui::Button::new("Dijkstra's Algorithm")).clicked() {
+                        self.current_scene = "Dijkstra".to_string();
+                        self.current_algorithm = Some(Box::new(dijkstra::DijkstraVisualizer::new()));
+                        self.current_algorithm.as_mut().unwrap().initialize();
+                    }
                     if ui.add_sized(button_size, egui::Button::new("Merge Sort")).clicked() {
                         self.current_scene = "Merge Sort".to_string();
                         self.current_algorithm = Some(Box::new(merge_sort::MergeSortVisualizer::new()));

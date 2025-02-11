@@ -15,7 +15,7 @@ pub struct MergeSortVisualizer {
 
 impl MergeSortVisualizer {
     pub fn new() -> Self {
-        let data = vec![45, 23, 11, 89, 77, 98, 4, 28, 65, 43]; // Example dataset
+        let data = vec![45, 23, 11, 89, 77, 98, 4, 28, 65, 43, 56, 12, 35, 67, 99, 21, 74, 3, 18, 40, 81, 66, 29, 92, 7]; // Example dataset
         let temp = data.clone();
         let mut steps = Vec::new();
         Self::generate_steps(&mut data.clone(), &mut steps, 0, data.len() - 1);
