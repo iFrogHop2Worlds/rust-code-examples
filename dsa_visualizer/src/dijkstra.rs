@@ -129,7 +129,7 @@ impl Algorithm for DijkstraVisualizer {
         }
     }
 
-    fn render(&self, ui: &mut egui::Ui) {
+    fn render(&mut self, ui: &mut egui::Ui) {
         let painter = ui.painter();
         let node_radius = 30.0;
         let center_x = ui.min_rect().center().x;

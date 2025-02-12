@@ -97,7 +97,7 @@ impl Algorithm for MergeSortVisualizer {
         }
     }
 
-    fn render(&self, ui: &mut egui::Ui) {
+    fn render(&mut self, ui: &mut egui::Ui) {
         if let Some((start, mid, end)) = self.current_ranges {
             for (i, &val) in self.data.iter().enumerate() {
 

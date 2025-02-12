@@ -5,7 +5,7 @@ use eframe::egui;
 pub trait Algorithm {
     fn initialize(&mut self);
     fn step(&mut self);
-    fn render(&self, ui: &mut egui::Ui);
+    fn render(&mut self, ui: &mut egui::Ui);
     fn auto_play(&self) -> bool;
     fn toggle_auto_traverse(&mut self);
     fn start(&mut self);

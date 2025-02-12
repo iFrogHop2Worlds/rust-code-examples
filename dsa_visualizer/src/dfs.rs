@@ -162,7 +162,7 @@ impl Algorithm for DFSVisualizer {
 
     fn step(&mut self) { self.dfs_step() }
 
-    fn render(&self, ui: &mut eframe::egui::Ui) {
+    fn render(&mut self, ui: &mut eframe::egui::Ui) {
         self.render_tree(ui)    ;
     }
 
