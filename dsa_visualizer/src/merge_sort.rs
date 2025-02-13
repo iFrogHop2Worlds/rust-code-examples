@@ -98,27 +98,43 @@ impl Algorithm for MergeSortVisualizer {
     }
 
     fn render(&mut self, ui: &mut egui::Ui) {
-        if let Some((start, mid, end)) = self.current_ranges {
-            for (i, &val) in self.data.iter().enumerate() {
+        let available_width = ui.available_width();
+        let available_height = 200.0;
+        let bar_spacing = 2.0;
+        let max_value = *self.data.iter().max().unwrap_or(&1) as f32;
 
+        let bar_width = (available_width / self.data.len() as f32) - bar_spacing;
+
+        let (response, painter) = ui.allocate_painter(
+            egui::vec2(available_width, available_height),
+            egui::Sense::hover(),
+        );
+
+        let rect = response.rect;
+
+        for (i, &value) in self.data.iter().enumerate() {
+            let value_normalized = value as f32 / max_value;
+            let height = value_normalized * available_height;
+            let x = rect.min.x + (i as f32 * (bar_width + bar_spacing));
+
+            let bar_rect = egui::Rect::from_min_size(
+                egui::pos2(x, rect.max.y - height),
+                egui::vec2(bar_width, height),
+            );
+
+            let color = if let Some((start, mid, end)) = self.current_ranges {
                 if i >= start && i < mid {
-                    ui.colored_label(Color32::from_rgb(0, 255, 0), format!("Index  {}:  {}", i, val));
-                }
-
-                else if i >= mid && i < end {
-                    ui.colored_label(Color32::from_rgb(255, 0, 0), format!("Index  {}:  {}", i, val));
-                }
-
-                else if Some(i) == Option::from(self.current_step) {
-                    ui.colored_label(Color32::from_rgb(0, 128, 128), format!("Index  {}:  {}", i, val));
+                    Color32::from_rgb(0, 255, 0) // Left subarray
+                } else if i >= mid && i < end {
+                    Color32::from_rgb(255, 0, 0) // Right subarray
                 } else {
-                    ui.label(format!("Index  {}:  {}", i, val));
+                    Color32::from_rgb(150, 150, 150) // Inactive elements
                 }
-            }
-        } else {
-            for (i, &val) in self.data.iter().enumerate() {
-                ui.label(format!("Index  {}:  {}", i, val));
-            }
+            } else {
+                Color32::from_rgb(150, 150, 150)
+            };
+
+            painter.rect_filled(bar_rect, 0.0, color);
         }
 
         ui.separator();
