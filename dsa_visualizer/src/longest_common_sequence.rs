@@ -149,7 +149,7 @@ impl Algorithm for LCSVisualizer {
                 ui.label(c.to_string());
             }
         });
-        
+
         for i in 0..=self.str1.len() {
             ui.horizontal(|ui| {
                 if i == 0 {

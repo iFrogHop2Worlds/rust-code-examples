@@ -91,6 +91,11 @@ impl eframe::App for DSAVisualizer {
                         self.current_algorithm = Some(Box::new(longest_common_sequence::LCSVisualizer::new()));
                         self.current_algorithm.as_mut().unwrap().initialize();
                     }
+                    if ui.add_sized(button_size, egui::Button::new("Euclidean Algorithm")).clicked() {
+                        self.current_scene = "Euclidean Algorithm".to_string();
+                        self.current_algorithm = Some(Box::new(euclidean::EuclideanVisualizer::new()));
+                        self.current_algorithm.as_mut().unwrap().initialize();
+                    }
                 });
 
             } else {
